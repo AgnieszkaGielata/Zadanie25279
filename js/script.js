@@ -3,7 +3,7 @@ let endOfThePage = 0;
 
 let preloading = false;
 
-const showPreloader = () =>{
+const showPreloader = () => {
 
     let preloader = document.getElementById('preloader');
     console.log(`showPreloader()`);
@@ -11,7 +11,7 @@ const showPreloader = () =>{
     preloading = true;
 }
 
-const hidePreloader = () =>{
+const hidePreloader = () => {
 
     let preloader = document.getElementById('preloader');
     console.log(`hidePreloader()`);
@@ -24,49 +24,49 @@ const hidePreloader = () =>{
 const getData = () => {
 
     if (!preloading) {
-        
+
         showPreloader();
-      
+
     }
-  
+
 
     fetch(`https://akademia108.pl/api/ajax/get-users.php`)
-    .then(res =>res.json())
-    .then(data =>{
+        .then(res => res.json())
+        .then(data => {
 
-        let body = document.body;
-        let hr = document.createElement('hr');
-        body.appendChild(hr);
+            let body = document.body;
+            let hr = document.createElement('hr');
+            body.appendChild(hr);
 
-        for (let user of data) {
-            let pId = document.createElement('p');
-            let pName = document.createElement('p');
-            let pWebsite = document.createElement('p');
+            for (let user of data) {
+                let pId = document.createElement('p');
+                let pName = document.createElement('p');
+                let pWebsite = document.createElement('p');
 
 
-            pId.innerText = `User ID: ${user.id}`;
-            pName.innerText = `User Name: ${user.Name}`;
-            pWebsite.innerHTML = `User URL: ${user.pWebsite}<br />--------`;
+                pId.innerText = `User ID: ${user.id}`;
+                pName.innerText = `User Name: ${user.name}`;
+                pWebsite.innerHTML = `User URL: ${user.website}<br />--------`;
 
-           
 
-            body.appendChild(pId);
-            body.appendChild(pName);
-            body.appendChild(pWebsite);
-        }
 
-        
-        hidePreloader();
+                body.appendChild(pId);
+                body.appendChild(pName);
+                body.appendChild(pWebsite);
+            }
 
-        console.log(data);
-    })
-    .catch(error => {
-        console.log(error);
-    });
+
+            hidePreloader();
+
+            console.log(data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
 
 }
 const scrollToEndOfPage = () => {
-   
+
     let d = document.documentElement;
 
     let scrollHeight = d.scrollHeight;
@@ -77,22 +77,22 @@ const scrollToEndOfPage = () => {
 
     let sumScrolTopClientHeight = Math.ceil(scrollTop + clientHeight);
 
-    
-     
-console.log(`scrollHeight: ${scrollHeight}`);
-console.log(`sumScrolTopClientHeight: ${sumScrolTopClientHeight}`);
-console.log(`scrollTop: ${scrollTop}`);
-console.log(`clientHeight: ${clientHeight}`);
-console.log('=======================');
 
-if (sumScrolTopClientHeight >= scrollHeight) {
-    endOfThePage += 1;
-    console.log(`Scrolled to the end of page: ${endOfThePage}`);
 
-    
+    console.log(`scrollHeight: ${scrollHeight}`);
+    console.log(`sumScrolTopClientHeight: ${sumScrolTopClientHeight}`);
+    console.log(`scrollTop: ${scrollTop}`);
+    console.log(`clientHeight: ${clientHeight}`);
+    console.log('=======================');
 
-    getData();
-}
+    if (sumScrolTopClientHeight >= scrollHeight) {
+        endOfThePage += 1;
+        console.log(`Scrolled to the end of page: ${endOfThePage}`);
+
+
+
+        getData();
+    }
 
 
 }
